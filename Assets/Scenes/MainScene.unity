@@ -256,6 +256,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &526092692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 526092694}
+  - component: {fileID: 526092693}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &526092693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526092692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0cf7a9b7f8fe41918346cbe2cc12d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleSpawner: {fileID: 786210518}
+  initialSpawnDelay: 2
+  spawnInterval: 1.5
+--- !u!4 &526092694
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526092692}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,8 +431,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f9e43075ad754ba489fa47ee80d91f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  circlePrefab: {fileID: 2416337453538009967, guid: 4d46aaaf3ee934b09aba9e7763285386, type: 3}
-  spawnInterval: 2
+  mosquitoPrefabs:
+  - {fileID: 4029399130258406041, guid: d2217ae0acb364a82bbf23c69896c8a3, type: 3}
+  - {fileID: 1273995706744110073, guid: 01241d4e957a747129345704ba40bfd9, type: 3}
+  - {fileID: 3345703587569054669, guid: 86a3b649adc3d4236bb82904bfefc659, type: 3}
+  mainCamera: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -393,3 +443,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 786210517}
+  - {fileID: 526092694}

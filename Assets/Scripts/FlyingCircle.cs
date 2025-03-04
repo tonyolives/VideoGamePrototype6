@@ -29,10 +29,24 @@ public class FlyingCircle : MonoBehaviour
                 canFly = false;
             }
         }
+
+        CheckMouseClick();
     }
+    
     // when clicked
-    private void OnMouseDown()
+    private void CheckMouseClick()
     {
-        Destroy(gameObject);
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePosition2D = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
+
+            Collider2D hitCollider = Physics2D.OverlapPoint(mousePosition2D);
+
+            if (hitCollider != null && hitCollider.gameObject == gameObject)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }
