@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Mathematics.Geometry;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class Flight : MonoBehaviour
     private float directionTimer = 0f;
     private float maxJitter = 2f;  
     [SerializeField] Sprite topView;
+    [SerializeField] Sprite blood;
     private float damage;
     private bool hazy;
     private Camera mainCamera;
@@ -132,10 +134,35 @@ void KeepWithinBounds()
 
             if (hitCollider != null && hitCollider.gameObject == gameObject)
             {
-                Destroy(gameObject);
+                Died();
             }
         }
     }
+
+private void Died() {
+    StartCoroutine(FadeBlood());
+}
+
+private IEnumerator FadeBlood() {
+    SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+    spriteRenderer.sprite = blood;
+
+    Color startColor = spriteRenderer.color;
+    float fadeDuration = 1f;
+    float timeElapsed = 0f;
+
+    //fade over time
+    while (timeElapsed < fadeDuration) {
+        float alpha = Mathf.Lerp(startColor.a, 0f, timeElapsed / fadeDuration);
+        spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+        timeElapsed += Time.deltaTime;
+        yield return null;
+    }
+
+    spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
+
+    Destroy(gameObject);
+}
 
     void Hazy(){
 

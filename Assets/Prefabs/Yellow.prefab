@@ -104,6 +104,7 @@ MonoBehaviour:
   speed: 5
   flyingDuration: 1.5
   topView: {fileID: -7440394924247882380, guid: 53fb70541877b434da39176d7032828f, type: 3}
+  blood: {fileID: -174042169833062346, guid: 1ae2b276a23a54c83a474865870d028c, type: 3}
 --- !u!61 &2463501840052344381
 BoxCollider2D:
   m_ObjectHideFlags: 0
