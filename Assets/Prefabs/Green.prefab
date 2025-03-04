@@ -1807,7 +1807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51e45f92d0ad45fda7dd6902504899c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 3
   flyingDuration: 1.5
   topView: {fileID: 2198794687606744949, guid: 41b285f5c0f214f9ba91ba857b8fdf28, type: 3}
   blood: {fileID: -174042169833062346, guid: 1ae2b276a23a54c83a474865870d028c, type: 3}
@@ -1845,7 +1845,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -1.6471577, y: 1.4970808}
+  m_Offset: {x: -1, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1855,5 +1855,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.6956844, y: 10.515839}
+  m_Size: {x: 15, y: 18}
   m_EdgeRadius: 0

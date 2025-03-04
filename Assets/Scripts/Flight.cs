@@ -52,63 +52,81 @@ public class Flight : MonoBehaviour
     }
 
    void Update()
-{
-    if (canFly)
     {
-        //change movement direction at intervals
-        directionTimer -= Time.deltaTime;
-        if (directionTimer <= 0f)
+        if (canFly)
         {
-            currentDirection = Random.insideUnitCircle.normalized * Random.Range(0.5f, maxJitter);  
-            directionTimer = directionChangeInterval;
-        }
-
-        //movement
-        transform.position += (Vector3)(currentDirection * speed * Time.deltaTime);
-
-        //prevent going off-screen
-        KeepWithinBounds();
-
-        //stop flying countdown
-        flightTimer -= Time.deltaTime;
-        if (flightTimer <= 0f)
-        {
-            canFly = false;
-            gameObject.GetComponent<SpriteRenderer>().sprite = topView;
-            InvokeRepeating("DoDamage", 0f, 1.5f);
-            if (hazy)
+            //change movement direction at intervals
+            directionTimer -= Time.deltaTime;
+            if (directionTimer <= 0f)
             {
-                InvokeRepeating("Hazy", 0f, 0.3f);
+                currentDirection = Random.insideUnitCircle.normalized * Random.Range(0.5f, maxJitter);  
+                directionTimer = directionChangeInterval;
+            }
+
+            //movement
+            transform.position += (Vector3)(currentDirection * speed * Time.deltaTime);
+
+            //prevent going off-screen
+            KeepWithinBounds();
+
+            //stop flying countdown
+            flightTimer -= Time.deltaTime;
+            if (flightTimer <= 0.0f)
+            {
+                canFly = false;
+                gameObject.GetComponent<SpriteRenderer>().sprite = topView;
+                InvokeRepeating("DoDamage", 0f, 1.5f);
+                if (hazy)
+                {
+                    InvokeRepeating("Hazy", 0f, 0.3f);
+                }
             }
         }
+
+        FlipSpriteDirection();
+
+        CheckMouseClick();
     }
 
-    FlipSpriteDirection();
+    void KeepWithinBounds()
+    {
+        Vector3 position = transform.position;
 
-    CheckMouseClick();
-}
+        // Get world corners based on camera
+        float screenHeight = 2f * mainCamera.orthographicSize;
+        float screenWidth = screenHeight * mainCamera.aspect;
 
-void KeepWithinBounds()
-{
-    //check if within  screen boundaries
-    if (screenPos.x < 0f)
-    {
-        currentDirection.x = Mathf.Abs(currentDirection.x);
-    }
-    else if (screenPos.x > 1f)
-    {
-        currentDirection.x = -Mathf.Abs(currentDirection.x);
+        float leftBound = -screenWidth / 2f;
+        float rightBound = screenWidth / 2f;
+        float topBound = mainCamera.orthographicSize;
+        float bottomBound = -mainCamera.orthographicSize;
+
+        // Constrain mosquito position inside screen bounds
+        if (position.x < leftBound)
+        {
+            position.x = leftBound;
+            currentDirection.x = Mathf.Abs(currentDirection.x);  // Reflect movement
+        }
+        else if (position.x > rightBound)
+        {
+            position.x = rightBound;
+            currentDirection.x = -Mathf.Abs(currentDirection.x); // Reflect movement
+        }
+
+        if (position.y < bottomBound)
+        {
+            position.y = bottomBound;
+            currentDirection.y = Mathf.Abs(currentDirection.y);  // Reflect movement
+        }
+        else if (position.y > topBound)
+        {
+            position.y = topBound;
+            currentDirection.y = -Mathf.Abs(currentDirection.y); // Reflect movement
+        }
+
+        transform.position = position;
     }
 
-    if (screenPos.y < 0f)
-    {
-        currentDirection.y = Mathf.Abs(currentDirection.y);
-    }
-    else if (screenPos.y > 1f)
-    {
-        currentDirection.y = -Mathf.Abs(currentDirection.y);
-    }
-}
 
     private void FlipSpriteDirection()
     {

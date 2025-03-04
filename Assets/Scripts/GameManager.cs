@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [Header("Spawner Reference")]
-    public CircleSpawner circleSpawner;
+    public MosquitoSpawner mosquitoSpawner;
 
     [Header("Wave System")]
     public float initialSpawnInterval = 3f;  // Initial time between spawns
@@ -12,9 +12,9 @@ public class GameManager : MonoBehaviour
     public int enemiesIncreasePerWave = 2;    // How many more enemies spawn each wave
     public float minimumSpawnInterval = 0.5f; // Cap to avoid insane spawn rates
 
-    private int currentWave = 1;
+    private int currentWave = 0;
     private float spawnTimer;
-    private int enemiesToSpawnInWave;
+    public int enemiesToSpawnInWave;
     private int enemiesSpawned;
 
     private void Start()
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // Once all enemies in wave spawn, wait for next wave
-            if (Object.FindObjectsByType<FlyingCircle>(FindObjectsSortMode.None).Length == 0)
+            if (Object.FindObjectsByType<Flight>(FindObjectsSortMode.None).Length == 0)
             {
                 StartNewWave();
             }
@@ -56,15 +56,27 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Starting Wave {currentWave} with {enemiesToSpawnInWave} enemies!");
     }
 
+    // expose current wave count
+    public int GetCurrentWave()
+    {
+        return currentWave;
+    }
+
+    // get enemies remaining in wave
+    public int GetEnemiesRemainingInWave()
+    {
+        return enemiesToSpawnInWave - enemiesSpawned + Object.FindObjectsByType<Flight>(FindObjectsSortMode.None).Length;
+    }
+
     public void SpawnEnemy()
     {
-        if (circleSpawner != null)
+        if (mosquitoSpawner != null)
         {
-            circleSpawner.SpawnEnemy();
+            mosquitoSpawner.SpawnEnemy();
         }
         else
         {
-            Debug.LogWarning("CircleSpawner reference not set on GameManager.");
+            Debug.LogWarning("Mosquito reference not set on GameManager.");
         }
     }
 
