@@ -202,7 +202,7 @@ public class Flight : MonoBehaviour
     {
         if (playerSystem != null && canDoDamage == true)
         {
-            playerSystem.TakeDamage(damage);
+            playerSystem.TakeDamage(damage, hazy);
             Debug.Log($"{gameObject.name} dealt {damage} damage to player!");
         }
     }
