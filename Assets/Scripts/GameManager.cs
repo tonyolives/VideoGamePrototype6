@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
     [Header("Wave System")]
     public float initialSpawnInterval = 3f;  // Initial time between spawns
     public int initialEnemiesPerWave = 5;     // Initial enemies per wave
-    public float spawnIntervalReduction = 0.2f; // How much to reduce interval per wave
+    public float spawnIntervalReduction = 0.3f; // How much to reduce interval per wave
     public int enemiesIncreasePerWave = 2;    // How many more enemies spawn each wave
-    public float minimumSpawnInterval = 0.5f; // Cap to avoid insane spawn rates
+    public float minimumSpawnInterval = 0.4f; // Cap to avoid insane spawn rates
 
     private int currentWave = 0;
     private float spawnTimer;

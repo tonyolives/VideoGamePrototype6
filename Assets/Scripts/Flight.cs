@@ -1,4 +1,5 @@
 using System.Collections;
+using TreeEditor;
 using Unity.Mathematics.Geometry;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class Flight : MonoBehaviour
     public float flyingDuration = 1.5f;
     private float flightTimer = 2f;
     private bool canFly = true;
+    private bool canDoDamage = true;
     private Vector2 currentDirection;
     private float directionChangeInterval = 0.1f; 
     private float directionTimer = 0f;
@@ -20,8 +22,9 @@ public class Flight : MonoBehaviour
     private bool hazy;
     private Camera mainCamera;
     private Vector3 screenPos;
-
     private Vector2 spawnPosition;
+    private PlayerSystem playerSystem;
+
 
     void Start()
     {
@@ -29,31 +32,37 @@ public class Flight : MonoBehaviour
         {
             mainCamera = Camera.main;
         }
+
         screenPos = mainCamera.WorldToViewportPoint(transform.position);
         spawnPosition = transform.position; 
         flightTimer = flyingDuration;
         currentDirection = Random.insideUnitCircle.normalized; 
+
         if(gameObject.tag == "Enemy"){
-
-            damage = 1;
+            damage = 5;
             hazy = false;
-
-        } else if (gameObject.tag == "DoubleDamageEnemy"){
-
-            damage = 2;
-            hazy = false;
-
-        } else {
-
-            damage = 1;
-            hazy = true;
-
         }
+        else if (gameObject.tag == "DoubleDamageEnemy"){
+            damage = 10;
+            hazy = false;
+        }
+        else {
+            damage = 5;
+            hazy = true;
+        }
+
+        playerSystem = Object.FindAnyObjectByType<PlayerSystem>();
+
+        if (playerSystem == null)
+        {
+            Debug.LogError("PlayerSystem not found in scene. Make sure there is a PlayerSystem object in the scene.");
+        }
+
     }
 
    void Update()
     {
-        if (canFly)
+        if (canFly && canDoDamage == true)
         {
             //change movement direction at intervals
             directionTimer -= Time.deltaTime;
@@ -157,40 +166,45 @@ public class Flight : MonoBehaviour
         }
     }
 
-private void Died() {
-    StartCoroutine(FadeBlood());
-}
-
-private IEnumerator FadeBlood() {
-    SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-    spriteRenderer.sprite = blood;
-
-    Color startColor = spriteRenderer.color;
-    float fadeDuration = 1f;
-    float timeElapsed = 0f;
-
-    //fade over time
-    while (timeElapsed < fadeDuration) {
-        float alpha = Mathf.Lerp(startColor.a, 0f, timeElapsed / fadeDuration);
-        spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-        timeElapsed += Time.deltaTime;
-        yield return null;
+    private void Died() {
+        StartCoroutine(FadeBlood());
+        canDoDamage = false;
     }
 
-    spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
+    private IEnumerator FadeBlood() {
 
-    Destroy(gameObject);
-}
+        SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = blood;
+
+        Color startColor = spriteRenderer.color;
+        float fadeDuration = 1f;
+        float timeElapsed = 0f;
+
+        //fade over time
+        while (timeElapsed < fadeDuration) {
+            float alpha = Mathf.Lerp(startColor.a, 0f, timeElapsed / fadeDuration);
+            spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, 0f);
+
+        Destroy(gameObject);
+    }
 
     void Hazy(){
 
         //do the hazy thing
 
     }
-    void DoDamage(){
-
-        //lower player health by "damage" var
-
+    void DoDamage()
+    {
+        if (playerSystem != null && canDoDamage == true)
+        {
+            playerSystem.TakeDamage(damage);
+            Debug.Log($"{gameObject.name} dealt {damage} damage to player!");
+        }
     }
 
 }
