@@ -286,8 +286,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circleSpawner: {fileID: 786210518}
-  initialSpawnDelay: 2
-  spawnInterval: 1.5
+  initialSpawnInterval: 3
+  initialEnemiesPerWave: 5
+  spawnIntervalReduction: 0.2
+  enemiesIncreasePerWave: 2
+  minimumSpawnInterval: 0.5
 --- !u!4 &526092694
 Transform:
   m_ObjectHideFlags: 0
@@ -432,9 +435,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mosquitoPrefabs:
-  - {fileID: 4029399130258406041, guid: d2217ae0acb364a82bbf23c69896c8a3, type: 3}
-  - {fileID: 1273995706744110073, guid: 01241d4e957a747129345704ba40bfd9, type: 3}
-  - {fileID: 3345703587569054669, guid: 86a3b649adc3d4236bb82904bfefc659, type: 3}
+  - {fileID: 604409702184881498, guid: 8c185c7a84a51416d98338b3b2e7e8b5, type: 3}
+  - {fileID: 1873405041653346377, guid: 9c0ec80bec97b45aa95d5122c06d1d41, type: 3}
+  - {fileID: 3786460852397196050, guid: c4ccb9a26fe79417d8668161bb669ed6, type: 3}
   mainCamera: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
