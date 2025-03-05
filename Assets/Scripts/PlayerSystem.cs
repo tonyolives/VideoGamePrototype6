@@ -12,7 +12,8 @@ public class PlayerSystem : MonoBehaviour
 
     [Header("References")]
     public GameObject swatterPrefab;
-    public Slider healthBar;
+    //public Slider healthBar;
+    [SerializeField] Image healthBag;
     public Image damageFlashImage; 
     public float flashDuration = 0.2f;
 
@@ -130,10 +131,12 @@ public class PlayerSystem : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        if (healthBar != null)
-        {
-            healthBar.value = currentHealth / maxHealth;
-        }
+        // if (healthBar != null)
+        // {
+        //     healthBar.value = currentHealth / maxHealth;
+        // }
+
+        healthBag.fillAmount = currentHealth / maxHealth;
     }
 
     private void Die()
