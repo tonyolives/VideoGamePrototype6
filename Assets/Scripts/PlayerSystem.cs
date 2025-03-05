@@ -2,7 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;  // Required for DepthOfField
+using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;  // Required for DepthOfField
 
 public class PlayerSystem : MonoBehaviour
 {
@@ -142,5 +143,6 @@ public class PlayerSystem : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player has died!");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 }

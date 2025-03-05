@@ -6,11 +6,12 @@ public class GameManager : MonoBehaviour
     public MosquitoSpawner mosquitoSpawner;
 
     [Header("Wave System")]
-    public float initialSpawnInterval = 3f;  // Initial time between spawns
+    public float initialSpawnInterval = 2f;  // Initial time between spawns
     public int initialEnemiesPerWave = 5;     // Initial enemies per wave
-    public float spawnIntervalReduction = 0.3f; // How much to reduce interval per wave
+    public float spawnIntervalRangeReduction = 0.5f; // How much to reduce interval per wave
     public int enemiesIncreasePerWave = 2;    // How many more enemies spawn each wave
-    public float minimumSpawnInterval = 0.4f; // Cap to avoid insane spawn rates
+    public float minimumSpawnInterval = 0.05f; // Cap to avoid insane spawn rates
+                                            //Let's make them, suffer >:)
 
     private int currentWave = 0;
     private float spawnTimer;
@@ -32,8 +33,8 @@ public class GameManager : MonoBehaviour
                 SpawnEnemy();
                 enemiesSpawned++;
 
-                // Reset spawn timer with progressively shorter interval
-                spawnTimer = Mathf.Max(initialSpawnInterval - (currentWave - 1) * spawnIntervalReduction, minimumSpawnInterval);
+                // Set spawn timer to a random value within the range
+                spawnTimer = Random.Range(Mathf.Max(initialSpawnInterval - (currentWave - 1) * spawnIntervalRangeReduction, 0), minimumSpawnInterval);
             }
         }
         else

@@ -193,11 +193,6 @@ public class Flight : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void Hazy(){
-
-        //do the hazy thing
-
-    }
     void DoDamage()
     {
         if (playerSystem != null && canDoDamage == true)
